@@ -123,7 +123,7 @@ def bulk_create_session_service(body,db):
     else: 
         user_ver_dict = user_ver._asdict()
         user_ver_dict["userVerificationCount"] += count
-        if user_ver_dict["userVerificationCount"] > 25:
+        if user_ver_dict["userVerificationCount"] > 8:
             user_ver_dict["userIsVerified"] = "YES"
 
         update_data = VerificationUpdateRequest(

@@ -6,8 +6,8 @@ class SessionRequest(BaseModel):
     sessionUserId: str
     sessionId: str
     sessionUserIsPresent: str
-    sessionLatitude: float
-    sessionLongitude: float
+    sessionLatitude: str
+    sessionLongitude: str
     sessionCreatedAt: datetime
     sessionUpdatedAt: datetime
     sessionStatus: str
@@ -16,8 +16,8 @@ class SessionResponse(BaseModel):
     sessionUserId: str
     sessionId: str
     sessionUserIsPresent: str
-    sessionLatitude : float
-    sessionLongitude: float
+    sessionLatitude : str
+    sessionLongitude: str
     sessionCreatedAt: datetime
     sessionUpdatedAt: datetime
     sessionStatus: str
@@ -25,8 +25,8 @@ class SessionResponse(BaseModel):
 class SessionUpdateRequest(BaseModel):
     sessionUserId: Optional[str] = None
     sessionUserIsPresent: Optional[str] = None
-    sessionLatitude: Optional[float] = None
-    sessionLongitude: Optional[float] = None
+    sessionLatitude: Optional[str] = None
+    sessionLongitude: Optional[str] = None
     sessionStatus: Optional[str] = None
 
 class Verification(BaseModel):

@@ -47,10 +47,14 @@ class DetailedResponseSession(BaseModel):
     responseMessage: str
     body: SessionResponse
 
+class UserSessions(BaseModel):
+    sessions: List[SessionResponse]
+    user: Verification
+
 class DetailedResponseSessions(BaseModel):
     responseCode: str
     responseMessage: str
-    body: List[SessionResponse]
+    body: UserSessions
 
 class DetailedVerificationResponse(BaseModel):
     responseCode: str

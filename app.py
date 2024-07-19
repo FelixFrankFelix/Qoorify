@@ -6,9 +6,10 @@ from typing import List,Union
 #from repository.database import UserRepository
 from db import SessionLocal, engine
 from utility.exceptions import ResponseConstant
-from schemas import ResponseUnionSession,SessionRequest,ResponseUnionSessions,SessionUpdateRequest,ResponseUnionVerifications,ResponseUnionVerification,Verification,VerificationUpdateRequest,DetailedResponseSessions
+from schemas import ResponseUnionSession,SessionRequest,ResponseUnionSessions,SessionUpdateRequest,ResponseUnionVerifications,ResponseUnionVerification,Verification,VerificationUpdateRequest,DetailedResponseSessions,UserSessions,SessionResponse
 import repository
 import service
+from sqlalchemy.inspection import inspect
 app = FastAPI()
 
 # Dependency to get a database session
@@ -36,8 +37,16 @@ def read_session_by_id_controller(session_id: str, db: Session = Depends(get_db)
 
 @app.get("/read-session-by-user-id/{user_id}", response_model=ResponseUnionSessions)
 def read_session_by_user_id_controller(user_id: str, db: Session = Depends(get_db)):
-    db_session = repository.get_session_by_user_id(db, user_id=user_id)
-    return service.read_session_by_user_id_service(db_session)
+    db_sessions = repository.get_session_by_user_id(db, user_id=user_id)
+    db_user_ver = repository.get_user_ver_by_id(db, user_id=user_id)
+    
+    # Convert database rows to dictionaries
+    sessions = [session._asdict() for session in db_sessions]
+    user_ver = db_user_ver._asdict()
+
+    # Create Pydantic model instance
+    body = UserSessions(sessions=sessions, user=user_ver)
+    return service.read_session_by_user_id_service(body)
 
 @app.post("/update-session/{session_id}", response_model=ResponseUnionSession)
 def update_user_controller(session_id: str, session: SessionUpdateRequest , db: Session = Depends(get_db)):

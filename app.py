@@ -6,7 +6,7 @@ from typing import List,Union
 #from repository.database import UserRepository
 from db import SessionLocal, engine
 from utility.exceptions import ResponseConstant
-from schemas import ResponseUnionSession,SessionRequest,ResponseUnionSessions,SessionUpdateRequest,ResponseUnionVerifications,ResponseUnionVerification,Verification,VerificationUpdateRequest,DetailedResponseSessions,UserSessions,SessionResponse
+from schemas import ResponseUnionSession,SessionRequest,ResponseUnionSessions,SessionUpdateRequest,ResponseUnionVerifications,ResponseUnionVerification,Verification,VerificationUpdateRequest,DetailedResponseSessions,UserSessions,SessionResponse,Sessions
 import repository
 import service
 from sqlalchemy.inspection import inspect
@@ -25,7 +25,7 @@ def create_session_controller(session: SessionRequest, db: Session = Depends(get
     db_session = repository.create_session(db=db, session=session)
     return service.create_session_service(db_session)
 
-@app.get("/read-sessions/", response_model= ResponseUnionSessions)
+@app.get("/read-sessions/", response_model= Sessions)
 def read_sessions_controller(db: Session = Depends(get_db)):
     db_session = repository.get_sessions(db)
     return service.read_session_service(db_session)

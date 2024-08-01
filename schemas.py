@@ -51,6 +51,11 @@ class UserSessions(BaseModel):
     sessions: List[SessionResponse]
     user: Verification
 
+class Sessions(BaseModel):
+    responseCode: str
+    responseMessage: str
+    body: List[SessionResponse]
+
 class DetailedResponseSessions(BaseModel):
     responseCode: str
     responseMessage: str

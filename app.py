@@ -10,7 +10,17 @@ from schemas import ResponseUnionSession,SessionRequest,ResponseUnionSessions,Se
 import repository
 import service
 from sqlalchemy.inspection import inspect
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # Dependency to get a database session
 def get_db():
